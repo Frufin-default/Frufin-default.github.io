@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Frufin Junk Radio</title>
+</head>
+<body>
+  <h1>🎶 Frufin Junk Radio 🎶</h1>
+  <p>Música tocando automaticamente...</p>
+
+  <audio id="radio" autoplay></audio>
+
+  <script>
+    const playlist = [
+      "musicas/500 graus de vuko vuko (Padre Antonio Putaria).mp3",
+      "musicas/Adame DJ - Summer BaileHits Vol. 1 - 02 Titanium (Remix).mp3",
+      "musicas/Adame DJ - Summer BaileHits Vol. 1 - 05 Wonderful (Remix).mp3",
+    ];
+
+    let current = 0;
+    const radio = document.getElementById("radio");
+    radio.src = playlist[current];
+    radio.play();
+
+    radio.addEventListener("ended", () => {
+      current = (current + 1) % playlist.length;
+      radio.src = playlist[current];
+      radio.play();
+    });
+  </script>
+</body>
+</html>
