@@ -7,10 +7,14 @@
 <body>
   <h1>🎶 Frufin Junk Radio 🎶</h1>
   <p>Música tocando automaticamente...</p>
+  <button onclick="startRadio()">▶️ Tocar Rádio</button>
 
   <audio id="radio" autoplay></audio>
 
   <script>
+    function startRadio() {
+  radio.play();
+}
     const playlist = [
       "musicas/500 graus de vuko vuko (Padre Antonio Putaria).mp3",
       "musicas/Adame DJ - Summer BaileHits Vol. 1 - 02 Titanium (Remix).mp3",
