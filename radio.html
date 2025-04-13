@@ -1,36 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Frufin Junk Radio</title>
+  <title>🎵 Frufin Junk Radio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #111;
+      color: #fff;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #1db954;
+      color: white;
+    }
+    input[type="range"] {
+      width: 200px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎶 Frufin Junk Radio 🎶</h1>
-  <p>Música tocando automaticamente...</p>
-  <button onclick="startRadio()">▶️ Tocar Rádio</button>
+  <h1>🎧 Frufin Junk Radio</h1>
+  <p>Clique no botão para iniciar a rádio:</p>
 
-  <audio id="radio" autoplay></audio>
+  <button onclick="togglePlay()">▶️ Play / ⏸ Pause</button>
+  <button onclick="nextMusic()">⏭ Próxima</button>
+  <br>
+  <label>Volume:
+    <input type="range" min="0" max="1" step="0.01" value="0.8" onchange="setVolume(this.value)">
+  </label>
 
   <script>
-    function startRadio() {
-  radio.play();
-}
     const playlist = [
-      "musicas/500 graus de vuko vuko (Padre Antonio Putaria).mp3",
-      "musicas/Adame DJ - Summer BaileHits Vol. 1 - 02 Titanium (Remix).mp3",
-      "musicas/Adame DJ - Summer BaileHits Vol. 1 - 05 Wonderful (Remix).mp3",
+      "musicas/musica1.mp3",
+      "musicas/musica2.mp3"
     ];
 
     let current = 0;
-    const radio = document.getElementById("radio");
-    radio.src = playlist[current];
-    radio.play();
+    let radio = new Audio(playlist[current]);
+    radio.volume = 0.8;
 
-    radio.addEventListener("ended", () => {
-      current = (current + 1) % playlist.length;
-      radio.src = playlist[current];
+    function playMusic() {
       radio.play();
-    });
+    }
+
+    function togglePlay() {
+      if (radio.paused) {
+        radio.play();
+      } else {
+        radio.pause();
+      }
+    }
+
+    function nextMusic() {
+      radio.pause();
+      current = (current + 1) % playlist.length;
+      radio = new Audio(playlist[current]);
+      radio.volume = volumeSlider.value;
+      radio.play();
+      radio.addEventListener("ended", nextMusic);
+    }
+
+    function setVolume(value) {
+      radio.volume = value;
+    }
+
+    const volumeSlider = document.querySelector('input[type="range"]');
+    radio.addEventListener("ended", nextMusic);
   </script>
 </body>
 </html>
